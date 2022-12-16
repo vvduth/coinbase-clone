@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native'
 import React from 'react'
 
 const ListItem = ({name, symbol, currentPrice, pricePercentage7d, logoUrl }) => {
-    console.log("Name  ", name )
+    const priceChangeColor = pricePercentage7d > 0 ? '#34C759' : '#FF3B30' ; 
     return (
     <TouchableOpacity>
       <View style={styles.itemWrapper}>
@@ -14,18 +14,18 @@ const ListItem = ({name, symbol, currentPrice, pricePercentage7d, logoUrl }) => 
                     {name}
                 </Text>
                 <Text style={styles.subTitle}>
-                    {symbol}
+                    {symbol.toUpperCase()}
                 </Text>
             </View>
         </View>
 
         {/* right side */}
         <View styles ={styles.rightWrapper}>
-                <Text style={styles.title}>
-                    {currentPrice}
+                <Text style={[styles.title, {alignSelf: 'flex-end'}]}>
+                    $ {currentPrice.toLocaleString('en-US', {currency: 'USD'})}
                 </Text>
-                <Text style={[styles.subTitle, {color: 'red'}]}>
-                    {pricePercentage7d}
+                <Text style={[styles.subTitle, {alignSelf: 'flex-end'},{color: priceChangeColor}]}>
+                    {pricePercentage7d.toFixed(2)} %
                 </Text>
         </View>
 
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         alignItems: "center" ,
     },
     rightWrapper: {
-        alignItems: 'flex-end'
+        alignItems : 'flex-end'
     },
     titlesWrapper: {
         marginLeft: 8 
